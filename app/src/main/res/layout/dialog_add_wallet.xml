@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_add_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:text="@string/wallet_address"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_add_address"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_42sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/edittext_bg"
+        android:lines="1"
+        android:padding="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_32sdp"
+        android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="@id/tv_add_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_add_address" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_add_paste"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:src="@drawable/ic_paste"
+        app:layout_constraintBottom_toBottomOf="@id/et_add_address"
+        app:layout_constraintEnd_toEndOf="@id/et_add_address"
+        app:layout_constraintTop_toTopOf="@id/et_add_address" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_add_network"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:text="@string/transfer_network"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_add_address" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/sp_add_networks"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_38sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/edittext_bg"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="@id/et_add_address"
+        app:layout_constraintStart_toStartOf="@id/et_add_address"
+        app:layout_constraintTop_toBottomOf="@id/tv_add_network" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_save"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_120sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:background="@drawable/save_btn_bg"
+        android:text="@string/save"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/et_add_address"
+        app:layout_constraintStart_toStartOf="@id/et_add_address"
+        app:layout_constraintTop_toBottomOf="@id/sp_add_networks" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

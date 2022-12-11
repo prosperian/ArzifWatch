@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">ArzifWatch</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="watch_title">ارزیف واچ</string>
+    <string name="no_wallets">هنوز آدرس ولتی وارد نکرده اید.</string>
+    <string name="wallet_address">آدرس ولت</string>
+    <string name="transfer_network">شبکه انتقال</string>
+    <string name="save">ذخیره</string>
+    <string name="edit">ویرایش</string>
+    <string name="delete">حذف</string>
+    <string-array name="networks">
+        <item>BEP2</item>
+        <item>BEP20</item>
+        <item>BTC</item>
+        <item>BCH</item>
+        <item>DOGE</item>
+        <item>ERC20</item>
+        <item>LTC</item>
+        <item>TRC20</item>
+        <item>XRP</item>
+    </string-array>
 </resources>
