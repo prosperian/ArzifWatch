@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dip.arzifwatch.api.*
+import com.dip.arzifwatch.models.Wallet
+import com.dip.arzifwatch.repositories.DatabaseRepository
 import com.dip.arzifwatch.repositories.NetworkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -11,8 +13,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddViewModel @Inject constructor(private val networkRepository: NetworkRepository) :
+class AddViewModel @Inject constructor(
+    private val networkRepository: NetworkRepository,
+    private val databaseRepository: DatabaseRepository
+) :
     ViewModel() {
+
+    private val _wallets = MutableLiveData<MutableList<Wallet>>()
+    val wallets get() = _wallets
 
     private val _btc: MutableLiveData<Resource<NownodesResponse>> = MutableLiveData()
     val btc get() = _btc
@@ -93,6 +101,18 @@ class AddViewModel @Inject constructor(private val networkRepository: NetworkRep
         _xrp.postValue(Resource.Loading())
         val response = networkRepository.getXRP(address)
         _xrp.postValue(ResponseHandler.handleResponse(response))
+    }
+
+    fun addWalletToDb(wallet: Wallet) = viewModelScope.launch(Dispatchers.IO) {
+        databaseRepository.insertWallet(wallet)
+    }
+
+    fun getWallets() = viewModelScope.launch(Dispatchers.IO) {
+        _wallets.postValue(databaseRepository.getWallets())
+    }
+
+    fun deleteWallet(wallet: Wallet) = viewModelScope.launch(Dispatchers.IO) {
+        databaseRepository.deleteWallet(wallet)
     }
 
 }

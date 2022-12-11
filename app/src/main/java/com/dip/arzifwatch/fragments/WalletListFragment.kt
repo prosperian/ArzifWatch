@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentResultListener
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dip.arzifwatch.R
@@ -16,16 +17,21 @@ import com.dip.arzifwatch.databinding.FragmentWalletListBinding
 import com.dip.arzifwatch.interfaces.WalletItemClicked
 import com.dip.arzifwatch.models.Wallet
 import com.dip.arzifwatch.utils.Utils
+import com.dip.arzifwatch.viewmodels.AddViewModel
 
 class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemClicked {
 
     private lateinit var binding: FragmentWalletListBinding
     private lateinit var adapter: WalletListAdapter
+    private lateinit var viewModel: AddViewModel
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentWalletListBinding.bind(view)
+
+        viewModel = ViewModelProvider(requireActivity())[AddViewModel::class.java]
 
         binding.btnFab.setOnClickListener {
             AddWalletDialog.newInstance().show(
@@ -56,6 +62,20 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
             }
         })
 
+        viewModel.getWallets()
+        viewModel.wallets.observe(viewLifecycleOwner) {
+            it?.let {
+                if (it.isNotEmpty()) {
+                    if (!binding.rvWalletList.isVisible) {
+                        binding.rvWalletList.visibility = View.VISIBLE
+                        binding.ivListWallet.visibility = View.GONE
+                        binding.tvListNoWallet.visibility = View.GONE
+                    }
+                    adapter.addWalletList(it)
+                }
+            }
+        }
+
 
         childFragmentManager.setFragmentResultListener(
             Utils.WALLET, viewLifecycleOwner
@@ -69,7 +89,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                         binding.tvListNoWallet.visibility = View.GONE
                     }
                     adapter.addWallet(wallet)
-                    //TODO: add to database
+                    viewModel.addWalletToDb(wallet)
                 }
             }
         }
@@ -89,7 +109,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
             binding.ivListWallet.visibility = View.VISIBLE
             binding.tvListNoWallet.visibility = View.VISIBLE
         }
-        //TODO: remove from database
+        viewModel.deleteWallet(wallet)
     }
 
 }

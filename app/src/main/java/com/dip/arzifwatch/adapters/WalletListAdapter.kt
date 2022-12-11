@@ -74,6 +74,11 @@ class WalletListAdapter(private val itemClicked: WalletItemClicked) :
         notifyItemInserted(mList.size)
     }
 
+    fun addWalletList(wallets: MutableList<Wallet>) {
+        mList.addAll(wallets)
+        notifyDataSetChanged()
+    }
+
     private fun showPopup(context: Context, p: Point, position: Int) {
         val wallet = mList[position]
 
