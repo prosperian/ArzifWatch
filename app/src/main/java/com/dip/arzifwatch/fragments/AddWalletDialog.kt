@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
@@ -174,7 +175,12 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -196,7 +202,12 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -218,7 +229,12 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -240,7 +256,12 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -262,7 +283,12 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -284,7 +310,12 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -306,7 +337,12 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -355,7 +391,12 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -377,7 +418,11 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }

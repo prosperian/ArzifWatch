@@ -202,7 +202,12 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -224,7 +229,12 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -246,7 +256,12 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -268,7 +283,12 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -290,7 +310,12 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -312,7 +337,12 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -334,7 +364,12 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -383,7 +418,12 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
@@ -405,7 +445,12 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Log.d("danial", "error")
+                    Toast.makeText(
+                        requireContext().applicationContext,
+                        "Not a valid address",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
             }
         }
