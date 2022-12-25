@@ -24,11 +24,12 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_add_address"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_42sdp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_16sdp"
         android:background="@drawable/edittext_bg"
         android:lines="1"
+        android:textSize="@dimen/_14ssp"
         android:padding="@dimen/_8sdp"
         android:paddingEnd="@dimen/_32sdp"
         android:textColor="@color/text_color"
@@ -64,7 +65,7 @@
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/sp_add_networks"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_38sdp"
+        android:layout_height="@dimen/_35sdp"
         android:layout_marginTop="@dimen/_16sdp"
         android:background="@drawable/edittext_bg"
         android:spinnerMode="dropdown"

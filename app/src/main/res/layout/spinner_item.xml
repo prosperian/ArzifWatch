@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_8sdp"
+        android:textSize="@dimen/_14ssp"
         android:textAlignment="viewStart"
         android:textColor="@color/text_color" />
 

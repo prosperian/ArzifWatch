@@ -19,6 +19,7 @@ import com.dip.arzifwatch.models.Coin
 import com.dip.arzifwatch.models.Wallet
 import com.dip.arzifwatch.utils.Utils
 import com.dip.arzifwatch.viewmodels.AddViewModel
+import java.math.BigDecimal
 
 
 class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
@@ -27,6 +28,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
     private lateinit var viewModel: AddViewModel
     private var wallet: Wallet? = null
     private var selectedNet = 0
+    private var isEditing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +93,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
         }
 
         wallet?.let {
-            // edit
+            isEditing = true
             binding.etAddAddress.setText(it.address)
             val networks = resources.getStringArray(R.array.networks)
             networks.forEachIndexed { index, net ->
@@ -107,10 +109,12 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
     private fun addToList(wallet: Wallet) {
         val netList = resources.getStringArray(R.array.networks)
         wallet.net = netList[selectedNet]
+        wallet.netId = selectedNet
         parentFragmentManager.setFragmentResult(
             Utils.WALLET,
             Bundle().apply {
                 putParcelable(Utils.WALLET, wallet)
+                putBoolean(Utils.EDITING, isEditing)
             }
         )
         dismiss()
@@ -315,23 +319,34 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
                     it.data?.let { data ->
-                        val coins = mutableListOf<Coin>()
-                        data.trc20tokenBalances.forEach { trc ->
-                            coins.add(
-                                Coin(
-                                    name = trc.tokenName,
-                                    balance = trc.balance,
-                                    flagUrl = trc.tokenLogo
+                        data.balance?.let {
+                            val coins = mutableListOf<Coin>()
+                            data.balances.forEach { mainTrc ->
+                                coins.add(
+                                    Coin(
+                                        name = mainTrc.tokenName,
+                                        balance = mainTrc.amount,
+                                        flagUrl = mainTrc.tokenLogo
+                                    )
+                                )
+                            }
+                            data.trc20tokenBalances.forEach { trc ->
+                                coins.add(
+                                    Coin(
+                                        name = trc.tokenName,
+                                        balance = trc.balance,
+                                        flagUrl = trc.tokenLogo
+                                    )
+                                )
+                            }
+                            addToList(
+                                Wallet(
+                                    address = address,
+                                    balance = data.balance.toString(),
+                                    coins = coins
                                 )
                             )
                         }
-                        addToList(
-                            Wallet(
-                                address = address,
-                                balance = data.balance.toString(),
-                                coins = coins
-                            )
-                        )
                     }
                 }
 

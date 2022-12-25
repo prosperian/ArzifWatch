@@ -17,6 +17,8 @@ import com.dip.arzifwatch.databinding.PopupLayoutBinding
 import com.dip.arzifwatch.databinding.WalletListItemBinding
 import com.dip.arzifwatch.interfaces.WalletItemClicked
 import com.dip.arzifwatch.models.Wallet
+import java.math.BigDecimal
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 
@@ -51,12 +53,11 @@ class WalletListAdapter(private val itemClicked: WalletItemClicked) :
             binding.tvListAddress.text = wallet.address
             var balance = "N/A"
             try {
-                balance =
-                    NumberFormat.getNumberInstance(Locale.US)
-                        .format(wallet.balance.toBigDecimal()) + "$"
+                val trueBalance = wallet.balance.toBigDecimal().divide(BigDecimal( 1000000))
+                val dec = DecimalFormat("#,###.######")
+                binding.tvListBalance.text = dec.format(trueBalance) + "$"
             } catch (e: NumberFormatException) {
             }
-            binding.tvListBalance.text = balance
 
             binding.tvListNetwork.text = wallet.net
             if (wallet.coins.isNotEmpty()) {
@@ -77,6 +78,20 @@ class WalletListAdapter(private val itemClicked: WalletItemClicked) :
     fun addWalletList(wallets: MutableList<Wallet>) {
         mList.addAll(wallets)
         notifyDataSetChanged()
+    }
+
+    fun updateWallet(wallet: Wallet){
+        var position = -1
+        mList.forEachIndexed{i, it->
+            if(wallet.address == it.address){
+                position = i
+            }
+        }
+        if(position != -1){
+            mList.removeAt(position)
+            mList.add(position, wallet)
+            notifyItemChanged(position)
+        }
     }
 
     private fun showPopup(context: Context, p: Point, position: Int) {

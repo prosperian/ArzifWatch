@@ -11,6 +11,7 @@ data class Wallet(
     var address: String,
     var balance: String,
     var net: String? = "",
+    var netId: Int? = -1,
     var coins: MutableList<Coin> = mutableListOf(),
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 

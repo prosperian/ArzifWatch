@@ -19,6 +19,8 @@ class AddViewModel @Inject constructor(
 ) :
     ViewModel() {
 
+    var updating = false
+
     private val _wallets = MutableLiveData<MutableList<Wallet>>()
     val wallets get() = _wallets
 
@@ -113,6 +115,10 @@ class AddViewModel @Inject constructor(
 
     fun deleteWallet(wallet: Wallet) = viewModelScope.launch(Dispatchers.IO) {
         databaseRepository.deleteWallet(wallet)
+    }
+
+    fun updateWallet(wallet: Wallet) = viewModelScope.launch (Dispatchers.IO){
+        databaseRepository.updateWallet(wallet)
     }
 
 }

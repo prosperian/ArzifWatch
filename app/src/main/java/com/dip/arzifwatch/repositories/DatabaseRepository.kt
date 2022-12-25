@@ -27,4 +27,8 @@ class DatabaseRepository @Inject constructor(private val walletDao: WalletDao) {
         walletDao.insertWallet(wallet)
     }
 
+    @WorkerThread fun updateWallet(wallet: Wallet){
+        walletDao.updateWallet(wallet)
+    }
+
 }

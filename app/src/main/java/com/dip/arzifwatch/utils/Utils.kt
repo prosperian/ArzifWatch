@@ -3,6 +3,7 @@ package com.dip.arzifwatch.utils
 import java.math.BigDecimal
 
 object Utils {
+    const val EDITING = "editing"
     const val DATABASE_NAME = "wallet_db"
     const val WALLET = "wallet"
     const val BASE_URL = "https://btc.nownodes.io/"

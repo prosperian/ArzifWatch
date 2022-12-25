@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dip.arzifwatch.databinding.CoinListItemBinding
 import com.dip.arzifwatch.models.Coin
+import java.math.BigDecimal
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 
@@ -24,11 +26,14 @@ class CoinListAdapter(private val mList: MutableList<Coin>) :
             binding.tvCoinName.text = coin.name
             var balance = "N/A"
             try {
-                balance =
-                    NumberFormat.getNumberInstance(Locale.US).format(coin.balance.toBigDecimal()) + "$"
+                val trueBalance = coin.balance.toBigDecimal().divide(BigDecimal( 1000000))
+                val dec = DecimalFormat("#,###.######")
+                binding.tvCoinBalance.text = dec.format(trueBalance)
+
+//                balance =
+//                    NumberFormat.getNumberInstance(Locale.US).format(dec)
             } catch (e: NumberFormatException) { }
 
-            binding.tvCoinBalance.text = balance
 
             Glide.with(binding.ivCoinLogo).load(coin.flagUrl).into(binding.ivCoinLogo)
         }

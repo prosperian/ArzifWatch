@@ -1,11 +1,19 @@
 package com.dip.arzifwatch.api
 
 import com.google.gson.annotations.SerializedName
+import java.math.BigDecimal
 
 data class Trc20Response(
     @SerializedName("trc20token_balances") var trc20tokenBalances: ArrayList<Trc20tokenBalances> = arrayListOf(),
-    @SerializedName("balance") var balance: Int
+    @SerializedName("balance") var balance: BigDecimal?,
+    @SerializedName("balances") var balances: MutableList<Trc20Balance> = mutableListOf()
 )
+
+data class Trc20Balance(
+    @SerializedName("balance") var amount: String,
+    @SerializedName("tokenName") var tokenName: String,
+    @SerializedName("tokenLogo") var tokenLogo: String,
+    )
 
 data class Trc20tokenBalances(
 
