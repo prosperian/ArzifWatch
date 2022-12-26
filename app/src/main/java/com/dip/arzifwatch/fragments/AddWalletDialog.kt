@@ -182,6 +182,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -209,6 +210,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -236,6 +238,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -263,6 +266,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -290,6 +294,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -317,6 +322,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -344,6 +350,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -355,6 +362,15 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
                     it.data?.let { data ->
+
+                        data.messageOnError?.let {
+                            Toast.makeText(
+                                requireContext().applicationContext,
+                                data.messageOnError,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
                         data.balance?.let {
                             val coins = mutableListOf<Coin>()
                             data.balances.forEach { mainTrc ->
@@ -398,6 +414,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -424,6 +441,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                         Toast.LENGTH_LONG
                     ).show()
                 }
+                else -> {}
             }
         }
     }

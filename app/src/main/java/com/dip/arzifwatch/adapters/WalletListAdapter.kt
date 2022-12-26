@@ -28,6 +28,7 @@ class WalletListAdapter(private val itemClicked: WalletItemClicked) :
 
     private lateinit var context: Context
     private val mList = mutableListOf<Wallet>()
+    private var adapter: CoinListAdapter? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletViewHolder {
         context = parent.context
@@ -53,7 +54,7 @@ class WalletListAdapter(private val itemClicked: WalletItemClicked) :
             binding.tvListAddress.text = wallet.address
             var balance = "N/A"
             try {
-                val trueBalance = wallet.balance.toBigDecimal().divide(BigDecimal( 1000000))
+                val trueBalance = wallet.balance.toBigDecimal().divide(BigDecimal(1000000))
                 val dec = DecimalFormat("#,###.######")
                 binding.tvListBalance.text = dec.format(trueBalance) + "$"
             } catch (e: NumberFormatException) {
@@ -80,17 +81,17 @@ class WalletListAdapter(private val itemClicked: WalletItemClicked) :
         notifyDataSetChanged()
     }
 
-    fun updateWallet(wallet: Wallet){
+    fun updateWallet(wallet: Wallet) {
         var position = -1
-        mList.forEachIndexed{i, it->
-            if(wallet.address == it.address){
+        mList.forEachIndexed { i, it ->
+            if (wallet.address == it.address) {
                 position = i
             }
         }
-        if(position != -1){
+        if (position != -1) {
             mList.removeAt(position)
             mList.add(position, wallet)
-            notifyItemChanged(position)
+            notifyDataSetChanged()
         }
     }
 

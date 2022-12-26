@@ -26,13 +26,14 @@ class CoinListAdapter(private val mList: MutableList<Coin>) :
             binding.tvCoinName.text = coin.name
             var balance = "N/A"
             try {
-                val trueBalance = coin.balance.toBigDecimal().divide(BigDecimal( 1000000))
+                val trueBalance = coin.balance.toBigDecimal().divide(BigDecimal(1000000))
                 val dec = DecimalFormat("#,###.######")
                 binding.tvCoinBalance.text = dec.format(trueBalance)
 
 //                balance =
 //                    NumberFormat.getNumberInstance(Locale.US).format(dec)
-            } catch (e: NumberFormatException) { }
+            } catch (e: NumberFormatException) {
+            }
 
 
             Glide.with(binding.ivCoinLogo).load(coin.flagUrl).into(binding.ivCoinLogo)

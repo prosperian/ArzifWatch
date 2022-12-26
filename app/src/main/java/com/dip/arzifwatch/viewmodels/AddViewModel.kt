@@ -1,12 +1,12 @@
 package com.dip.arzifwatch.viewmodels
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dip.arzifwatch.api.*
 import com.dip.arzifwatch.models.Wallet
 import com.dip.arzifwatch.repositories.DatabaseRepository
 import com.dip.arzifwatch.repositories.NetworkRepository
+import com.dip.arzifwatch.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,36 +19,34 @@ class AddViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    var updating = false
-
-    private val _wallets = MutableLiveData<MutableList<Wallet>>()
+    private val _wallets = SingleLiveEvent<MutableList<Wallet>>()
     val wallets get() = _wallets
 
-    private val _btc: MutableLiveData<Resource<NownodesResponse>> = MutableLiveData()
+    private val _btc: SingleLiveEvent<Resource<NownodesResponse>> = SingleLiveEvent()
     val btc get() = _btc
 
-    private val _bep2: MutableLiveData<Resource<Bep2Response>> = MutableLiveData()
+    private val _bep2: SingleLiveEvent<Resource<Bep2Response>> = SingleLiveEvent()
     val bep2 get() = _bep2
 
-    private val _bep20: MutableLiveData<Resource<CoinScanResponse>> = MutableLiveData()
+    private val _bep20: SingleLiveEvent<Resource<CoinScanResponse>> = SingleLiveEvent()
     val bep20 get() = _bep20
 
-    private val _bch: MutableLiveData<Resource<NownodesResponse>> = MutableLiveData()
+    private val _bch: SingleLiveEvent<Resource<NownodesResponse>> = SingleLiveEvent()
     val bch get() = _bch
 
-    private val _doge: MutableLiveData<Resource<DogeResponse>> = MutableLiveData()
+    private val _doge: SingleLiveEvent<Resource<DogeResponse>> = SingleLiveEvent()
     val doge get() = _doge
 
-    private val _erc20: MutableLiveData<Resource<CoinScanResponse>> = MutableLiveData()
+    private val _erc20: SingleLiveEvent<Resource<CoinScanResponse>> = SingleLiveEvent()
     val erc20 get() = _erc20
 
-    private val _ltc: MutableLiveData<Resource<NownodesResponse>> = MutableLiveData()
+    private val _ltc: SingleLiveEvent<Resource<NownodesResponse>> = SingleLiveEvent()
     val ltc get() = _ltc
 
-    private val _trc20: MutableLiveData<Resource<Trc20Response>> = MutableLiveData()
+    private val _trc20: SingleLiveEvent<Resource<Trc20Response>> = SingleLiveEvent()
     val trc20 get() = _trc20
 
-    private val _xrp: MutableLiveData<Resource<XrpResponse>> = MutableLiveData()
+    private val _xrp: SingleLiveEvent<Resource<XrpResponse>> = SingleLiveEvent()
     val xrp get() = _xrp
 
     fun getBtc(address: String) = viewModelScope.launch(Dispatchers.IO) {
@@ -114,10 +112,10 @@ class AddViewModel @Inject constructor(
     }
 
     fun deleteWallet(wallet: Wallet) = viewModelScope.launch(Dispatchers.IO) {
-        databaseRepository.deleteWallet(wallet)
+        databaseRepository.deleteWallet(wallet.address)
     }
 
-    fun updateWallet(wallet: Wallet) = viewModelScope.launch (Dispatchers.IO){
+    fun updateWallet(wallet: Wallet) = viewModelScope.launch(Dispatchers.IO) {
         databaseRepository.updateWallet(wallet)
     }
 

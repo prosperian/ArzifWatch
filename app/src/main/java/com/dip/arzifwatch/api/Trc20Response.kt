@@ -6,6 +6,7 @@ import java.math.BigDecimal
 data class Trc20Response(
     @SerializedName("trc20token_balances") var trc20tokenBalances: ArrayList<Trc20tokenBalances> = arrayListOf(),
     @SerializedName("balance") var balance: BigDecimal?,
+    @SerializedName("message") var messageOnError: String?,
     @SerializedName("balances") var balances: MutableList<Trc20Balance> = mutableListOf()
 )
 

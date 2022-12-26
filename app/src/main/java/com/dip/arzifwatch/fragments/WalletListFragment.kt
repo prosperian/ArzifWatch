@@ -71,6 +71,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                         binding.ivListWallet.visibility = View.GONE
                         binding.tvListNoWallet.visibility = View.GONE
                     }
+                    Log.d("danial", it.size.toString())
                     adapter.addWalletList(it)
                 }
             }
@@ -100,11 +101,10 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                         }
                     }
 
-
                     if (!editing) {
                         adapter.addWallet(wallet)
-                        viewModel.addWalletToDb(wallet)
                         viewModel.wallets.value?.add(wallet)
+                        viewModel.addWalletToDb(wallet)
                     } else {
                         addToUpdateList(wallet)
                     }
@@ -123,7 +123,6 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 ).show()
                 return@setOnRefreshListener
             }
-            viewModel.updating = true
             Log.d("danial", viewModel.wallets.value?.size.toString())
             viewModel.wallets.value?.forEach { wallet ->
                 wallet.netId?.let {
@@ -132,7 +131,6 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
             }
             binding.swipeRefresh.isRefreshing = false
             Toast.makeText(requireContext().applicationContext, "Updated", Toast.LENGTH_LONG).show()
-            viewModel.updating = false
         }
 
     }
@@ -149,7 +147,6 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
     }
 
     private fun getInfo(address: String, net: Int) {
-
         when (net) {
             0 -> {
                 getBep2(address)
@@ -209,6 +206,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -236,6 +234,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -263,6 +262,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -290,6 +290,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -317,6 +318,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -344,6 +346,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -371,6 +374,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -425,6 +429,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -452,6 +457,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                     ).show()
 
                 }
+                else -> {}
             }
         }
     }
@@ -470,8 +476,20 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
             binding.ivListWallet.visibility = View.VISIBLE
             binding.tvListNoWallet.visibility = View.VISIBLE
         }
-        viewModel.wallets.value?.remove(wallet)
-        viewModel.deleteWallet(wallet)
+        var position = -1
+        viewModel.wallets.value?.forEachIndexed { i, it ->
+            if (wallet.address == it.address) {
+                position = i
+                return@forEachIndexed
+            }
+        }
+        if (position != -1) {
+            Log.d("danial", position.toString())
+            viewModel.wallets.value?.removeAt(position)
+            viewModel.deleteWallet(wallet)
+        } else {
+            Log.d("danial", "not founded")
+        }
     }
 
 }

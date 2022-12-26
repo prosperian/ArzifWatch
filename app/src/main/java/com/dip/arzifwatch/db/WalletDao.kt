@@ -13,8 +13,8 @@ interface WalletDao {
     @Query("select * from wallet")
     fun getWallets(): MutableList<Wallet>
 
-    @Delete
-    fun deleteWallet(wallet: Wallet)
+    @Query("delete from wallet where address=:address")
+    fun deleteWallet(address: String)
 
     @Insert
     fun insertWallet(wallet: Wallet)

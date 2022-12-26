@@ -13,8 +13,8 @@ import javax.inject.Inject
 class DatabaseRepository @Inject constructor(private val walletDao: WalletDao) {
 
     @WorkerThread
-    suspend fun deleteWallet(wallet: Wallet) {
-        walletDao.deleteWallet(wallet)
+    suspend fun deleteWallet(address: String) {
+        walletDao.deleteWallet(address)
     }
 
     @WorkerThread
