@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.dip.arzifwatch.R
 import com.dip.arzifwatch.adapters.WalletListAdapter
 import com.dip.arzifwatch.api.Resource
@@ -58,6 +59,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
         binding.spAddNetworks.adapter = adapter
 
         binding.ivAddPaste.setOnClickListener {
+            binding.etAddAddress.text?.clear()
             val clipboard =
                 ContextCompat.getSystemService(requireContext(), ClipboardManager::class.java)
             clipboard?.let {
@@ -87,6 +89,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
 
         binding.btnAddSave.setOnClickListener {
             binding.etAddAddress.text?.let {
+                //TODO: fix this
                 viewModel.wallets.value?.forEach { oldWallet ->
                     if (oldWallet.address == it.toString()) {
                         Toast.makeText(
@@ -116,6 +119,15 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
             }
         }
 
+        binding.ivAddQr.setOnClickListener {
+            findNavController().navigate(R.id.qrCodeScannerFragment)
+        }
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(Utils.QR_KEY)
+            ?.observe(this) { result ->
+                binding.etAddAddress.text?.clear()
+                binding.etAddAddress.setText(result)
+            }
 
     }
 
@@ -169,7 +181,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
 
     private fun getBep2(address: String) {
         viewModel.getBep2(address)
-        viewModel.bep2.observe(viewLifecycleOwner) {
+        viewModel.bep2.observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -209,7 +221,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
 
     private fun getBep20(address: String) {
         viewModel.getBep20(address)
-        viewModel.bep20.observe(viewLifecycleOwner) {
+        viewModel.bep20.observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -233,7 +245,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
 
     private fun getBtc(address: String) {
         viewModel.getBtc(address)
-        viewModel.btc.observe(viewLifecycleOwner) {
+        viewModel.btc.observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -257,7 +269,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
 
     private fun getBch(address: String) {
         viewModel.getBch(address)
-        viewModel.bch.observe(viewLifecycleOwner) {
+        viewModel.bch.observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -281,7 +293,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
 
     private fun getDoge(address: String) {
         viewModel.getDoge(address)
-        viewModel.doge.observe(viewLifecycleOwner) {
+        viewModel.doge.observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -305,7 +317,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
 
     private fun getErc20(address: String) {
         viewModel.getErc20(address)
-        viewModel.erc20.observe(viewLifecycleOwner) {
+        viewModel.erc20.observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -329,7 +341,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
 
     private fun getLtc(address: String) {
         viewModel.getLtc(address)
-        viewModel.ltc.observe(viewLifecycleOwner) {
+        viewModel.ltc.observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -353,7 +365,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
 
     private fun getTrc20(address: String) {
         viewModel.getTrc20(address)
-        viewModel.trc20.observe(viewLifecycleOwner) {
+        viewModel.trc20.observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -413,7 +425,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
 
     private fun getXrp(address: String) {
         viewModel.getXrp(address)
-        viewModel.xrp.observe(viewLifecycleOwner) {
+        viewModel.xrp.observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")

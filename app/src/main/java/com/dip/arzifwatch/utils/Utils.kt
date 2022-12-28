@@ -8,6 +8,7 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 
 object Utils {
+    const val QR_KEY = "qrcode"
     const val EDITING = "editing"
     const val DATABASE_NAME = "wallet_db"
     const val WALLET = "wallet"

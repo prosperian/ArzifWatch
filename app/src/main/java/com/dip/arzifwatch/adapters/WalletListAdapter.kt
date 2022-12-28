@@ -3,6 +3,7 @@ package com.dip.arzifwatch.adapters
 import android.content.Context
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.PopupWindow
@@ -63,9 +64,13 @@ class WalletListAdapter(private val itemClicked: WalletItemClicked) :
 
             binding.tvListNetwork.text = wallet.net
             if (wallet.coins.isNotEmpty()) {
-                binding.rvListCoins.layoutManager = GridLayoutManager(
+                val layoutManager = GridLayoutManager(
                     context, 3, GridLayoutManager.HORIZONTAL, false
                 )
+                if (wallet.coins.size <= 3) {
+                    layoutManager.spanCount = wallet.coins.size
+                }
+                binding.rvListCoins.layoutManager = layoutManager
                 binding.rvListCoins.setRecycledViewPool(rvPool)
                 binding.rvListCoins.adapter = CoinListAdapter(wallet.coins)
             }

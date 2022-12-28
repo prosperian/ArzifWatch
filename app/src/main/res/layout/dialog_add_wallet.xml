@@ -31,7 +31,7 @@
         android:inputType="text"
         android:lines="1"
         android:padding="@dimen/_8sdp"
-        android:paddingEnd="@dimen/_32sdp"
+        android:paddingEnd="@dimen/_56sdp"
         android:textColor="@color/text_color"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintEnd_toEndOf="@id/tv_add_address"
@@ -46,6 +46,16 @@
         android:src="@drawable/ic_paste"
         app:layout_constraintBottom_toBottomOf="@id/et_add_address"
         app:layout_constraintEnd_toEndOf="@id/et_add_address"
+        app:layout_constraintTop_toTopOf="@id/et_add_address" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_add_qr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:src="@drawable/ic_qrcode"
+        app:layout_constraintBottom_toBottomOf="@id/et_add_address"
+        app:layout_constraintEnd_toStartOf="@id/iv_add_paste"
         app:layout_constraintTop_toTopOf="@id/et_add_address" />
 
     <androidx.appcompat.widget.AppCompatTextView

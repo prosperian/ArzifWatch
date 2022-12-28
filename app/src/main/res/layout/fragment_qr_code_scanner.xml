@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.QrCodeScannerFragment">
+
+    <com.budiyev.android.codescanner.CodeScannerView
+        android:id="@+id/scanner_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:frameColor="@color/teal_200"
+        app:frameSize="0.6"
+        app:frameCornersCapRounded="true"
+        app:frameCornersRadius="@dimen/_12sdp"
+        app:frameCornersSize="@dimen/_24sdp" />
+
+</FrameLayout>

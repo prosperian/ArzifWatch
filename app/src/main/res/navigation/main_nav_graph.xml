@@ -9,5 +9,14 @@
         android:id="@+id/walletListFragment"
         android:name="com.dip.arzifwatch.fragments.WalletListFragment"
         android:label="fragment_wallet_list"
-        tools:layout="@layout/fragment_wallet_list" />
+        tools:layout="@layout/fragment_wallet_list" >
+        <action
+            android:id="@+id/action_walletListFragment_to_qrCodeScannerFragment"
+            app:destination="@id/qrCodeScannerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/qrCodeScannerFragment"
+        android:name="com.dip.arzifwatch.fragments.QrCodeScannerFragment"
+        android:label="fragment_qr_code_scanner"
+        tools:layout="@layout/fragment_qr_code_scanner" />
 </navigation>

@@ -25,6 +25,8 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
     private lateinit var binding: FragmentWalletListBinding
     private lateinit var adapter: WalletListAdapter
     private lateinit var viewModel: AddViewModel
+    private var updateIndex = 0
+    private val updatedList = mutableListOf<Wallet>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -115,10 +117,9 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
             }
             viewModel.wallets.value?.forEach { wallet ->
                 wallet.netId?.let {
-                    getInfo(wallet.address, it)
+                    getInfo()
                 }
             }
-            Toast.makeText(requireContext().applicationContext, "Updated", Toast.LENGTH_LONG).show()
         }
 
     }
@@ -130,40 +131,55 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 wallet.netId = it.netId
             }
         }
+        updatedList.add(wallet)
+        Log.d("danial", "updated: " + wallet.address)
         viewModel.updateWallet(wallet)
         adapter.updateWallet(wallet)
     }
 
-    private fun getInfo(address: String, net: Int) {
-        when (net) {
-            0 -> {
-                getBep2(address)
+    private fun getInfo() {
+        viewModel.wallets.value?.let {
+
+            if (it.isEmpty()) {
+                return
             }
-            1 -> {
-                getBep20(address)
+            if (updateIndex > it.size - 1) {
+                return
             }
-            2 -> {
-                getBtc(address)
-            }
-            3 -> {
-                getBch(address)
-            }
-            4 -> {
-                getDoge(address)
-            }
-            5 -> {
-                getErc20(address)
-            }
-            6 -> {
-                getLtc(address)
-            }
-            7 -> {
-                getTrc20(address)
-            }
-            8 -> {
-                getXrp(address)
+            val wallet = it[updateIndex]
+            val address = wallet.address
+            Log.d("danial", "getting next: " + address)
+            when (wallet.netId) {
+                0 -> {
+                    getBep2(address)
+                }
+                1 -> {
+                    getBep20(address)
+                }
+                2 -> {
+                    getBtc(address)
+                }
+                3 -> {
+                    getBch(address)
+                }
+                4 -> {
+                    getDoge(address)
+                }
+                5 -> {
+                    getErc20(address)
+                }
+                6 -> {
+                    getLtc(address)
+                }
+                7 -> {
+                    getTrc20(address)
+                }
+                8 -> {
+                    getXrp(address)
+                }
             }
         }
+        updateIndex++
 
     }
 
@@ -356,7 +372,6 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
         viewModel.trc20.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
-                    Log.d("danial", "success")
                     it.data?.let { data ->
                         data.balance?.let {
                             val coins = mutableListOf<Coin>()
@@ -387,6 +402,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                             )
                         }
                     }
+                    getInfo()
                 }
 
                 is Resource.Loading -> {
