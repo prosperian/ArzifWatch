@@ -19,7 +19,5 @@ interface WalletDao {
     @Insert
     fun insertWallet(wallet: Wallet)
 
-    @Update
-    fun updateWallet(wallet: Wallet)
 
 }

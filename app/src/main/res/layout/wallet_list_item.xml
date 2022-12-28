@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginLeft="@dimen/_10sdp"
     android:layout_marginTop="@dimen/_5sdp"
     android:layout_marginRight="@dimen/_10sdp"
@@ -25,7 +25,7 @@
             android:lines="1"
             android:padding="@dimen/_8sdp"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +35,7 @@
             android:id="@+id/tv_list_network"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:background="@drawable/textview_network_bg"
             android:lines="1"
             android:paddingStart="@dimen/_8sdp"
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lines="1"
-            android:padding="@dimen/_8sdp"
+            android:padding="@dimen/_4sdp"
             android:textColor="@color/text_color"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
@@ -67,17 +67,19 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list_coins"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/iv_list_more"
             app:layout_constraintEnd_toEndOf="@id/tv_list_address"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            tools:itemCount="10"
-            tools:listitem="@layout/coin_list_item"
+            app:layout_constraintHeight_percent="0.6"
             app:layout_constraintStart_toStartOf="@id/tv_list_address"
-            app:layout_constraintTop_toBottomOf="@id/tv_list_balance" />
+            app:layout_constraintTop_toBottomOf="@id/tv_list_balance"
+            app:spanCount="3"
+            tools:itemCount="10"
+            tools:listitem="@layout/coin_list_item" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_list_more"

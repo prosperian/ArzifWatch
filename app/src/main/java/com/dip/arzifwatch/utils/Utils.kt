@@ -1,6 +1,11 @@
 package com.dip.arzifwatch.utils
 
+import android.content.Context
+import android.view.WindowManager
+import android.widget.PopupWindow
 import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 object Utils {
     const val EDITING = "editing"
@@ -23,5 +28,38 @@ object Utils {
     const val TRC20 = "https://apilist.tronscan.org/api/account"
     const val XRP = "https://api.xrpscan.com/api/v1/account/"
 
+}
+
+fun BigDecimal.calculateDollarValue(symbol: String): String {
+    var actualValue = BigDecimal(-1)
+    when (symbol) {
+        "BitTorrent" -> {
+            actualValue = this.divide(BigDecimal(1571442702030000000), 2, RoundingMode.FLOOR)
+        }
+        "trx" -> {
+            actualValue = this.divide(BigDecimal(18.2643957143), 2, RoundingMode.FLOOR)
+        }
+        "APENFT" -> {
+            actualValue = this.divide(BigDecimal(2351130.91663), 2, RoundingMode.FLOOR)
+        }
+        "Tether USD" -> {
+            actualValue = this.divide(BigDecimal(1.00007820911), 2, RoundingMode.FLOOR)
+        }
+    }
+    if (actualValue == BigDecimal(-1)) {
+        return "N/A"
+    }
+    val dec = DecimalFormat("#,###.######")
+    return "≈" + dec.format(actualValue.toDouble()) + "$"
+}
+
+fun PopupWindow.dimBehind() {
+    val container = contentView.rootView
+    val context = contentView.context
+    val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    val p = container.layoutParams as WindowManager.LayoutParams
+    p.flags = p.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
+    p.dimAmount = 0.7f
+    wm.updateViewLayout(container, p)
 }
 

@@ -9,6 +9,10 @@
     <string name="save">ذخیره</string>
     <string name="edit">ویرایش</string>
     <string name="delete">حذف</string>
+    <string name="dollar_format">%s$</string>
+    <string name="yes">آره</string>
+    <string name="delete_warning">حذف بشه؟</string>
+    <string name="no">نه</string>
     <string-array name="networks">
         <item>BEP2</item>
         <item>BEP20</item>

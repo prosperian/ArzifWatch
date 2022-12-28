@@ -18,6 +18,7 @@ import com.dip.arzifwatch.models.Coin
 import com.dip.arzifwatch.models.Wallet
 import com.dip.arzifwatch.utils.Utils
 import com.dip.arzifwatch.viewmodels.AddViewModel
+import java.math.BigDecimal
 
 class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemClicked {
 
@@ -71,7 +72,6 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                         binding.ivListWallet.visibility = View.GONE
                         binding.tvListNoWallet.visibility = View.GONE
                     }
-                    Log.d("danial", it.size.toString())
                     adapter.addWalletList(it)
                 }
             }
@@ -90,16 +90,6 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                         binding.ivListWallet.visibility = View.GONE
                         binding.tvListNoWallet.visibility = View.GONE
                     }
-                    viewModel.wallets.value?.forEach { oldWallet ->
-                        if (oldWallet.address == wallet.address) {
-                            Toast.makeText(
-                                requireContext().applicationContext,
-                                "Wallet already exist",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            return@setFragmentResultListener
-                        }
-                    }
 
                     if (!editing) {
                         adapter.addWallet(wallet)
@@ -114,22 +104,20 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
         }
 
         binding.swipeRefresh.setOnRefreshListener {
+            binding.swipeRefresh.isRefreshing = false
             if (viewModel.wallets.value?.isEmpty()!!) {
-                binding.swipeRefresh.isRefreshing = false
                 Toast.makeText(
                     requireContext().applicationContext,
-                    "No Wallets to update",
+                    "No wallets to update",
                     Toast.LENGTH_LONG
                 ).show()
                 return@setOnRefreshListener
             }
-            Log.d("danial", viewModel.wallets.value?.size.toString())
             viewModel.wallets.value?.forEach { wallet ->
                 wallet.netId?.let {
                     getInfo(wallet.address, it)
                 }
             }
-            binding.swipeRefresh.isRefreshing = false
             Toast.makeText(requireContext().applicationContext, "Updated", Toast.LENGTH_LONG).show()
         }
 
@@ -188,7 +176,19 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                     it.data?.let { data ->
                         data.address?.let {
                             if (data.balances.isNotEmpty()) {
-                                addToUpdateList(Wallet(it, data.balances[0].free))
+                                val coins = mutableListOf<Coin>()
+                                var sumBalance = BigDecimal(0)
+                                data.balances.forEach { bnp ->
+                                    sumBalance += bnp.free.toBigDecimal()
+                                    coins.add(
+                                        Coin(
+                                            balance = bnp.free,
+                                            name = bnp.symbol,
+                                            flagUrl = ""
+                                        )
+                                    )
+                                }
+                                addToUpdateList(Wallet(it, sumBalance.toString(), coins = coins))
                             }
                         }
                     }
@@ -199,11 +199,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -227,11 +223,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -255,11 +247,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -283,11 +271,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -311,11 +295,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -339,11 +319,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -367,11 +343,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -422,12 +394,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
-
+                    showOnError()
                 }
                 else -> {}
             }
@@ -450,16 +417,19 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
-
+                    showOnError()
                 }
                 else -> {}
             }
         }
+    }
+
+    private fun showOnError() {
+        Toast.makeText(
+            requireContext().applicationContext,
+            "Not a valid address",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
 
@@ -484,11 +454,8 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
             }
         }
         if (position != -1) {
-            Log.d("danial", position.toString())
             viewModel.wallets.value?.removeAt(position)
             viewModel.deleteWallet(wallet)
-        } else {
-            Log.d("danial", "not founded")
         }
     }
 

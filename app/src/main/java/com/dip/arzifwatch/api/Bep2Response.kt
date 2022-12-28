@@ -16,6 +16,6 @@ data class Bep2Balance(
     @SerializedName("free") var free: String,
     @SerializedName("frozen") var frozen: String? = null,
     @SerializedName("locked") var locked: String? = null,
-    @SerializedName("symbol") var symbol: String? = null
+    @SerializedName("symbol") var symbol: String
 
 )

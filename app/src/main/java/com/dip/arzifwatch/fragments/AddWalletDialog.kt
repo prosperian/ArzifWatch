@@ -87,7 +87,19 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
 
         binding.btnAddSave.setOnClickListener {
             binding.etAddAddress.text?.let {
+                viewModel.wallets.value?.forEach { oldWallet ->
+                    if (oldWallet.address == it.toString()) {
+                        Toast.makeText(
+                            requireContext().applicationContext,
+                            "Wallet already exist",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        return@setOnClickListener
+                    }
+                }
                 if (it.toString().isNotEmpty()) {
+                    isCancelable = false
+                    binding.btnAddSave.isEnabled = false
                     getInfo(address = it.toString(), net = selectedNet)
                 }
             }
@@ -164,7 +176,19 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                     it.data?.let { data ->
                         data.address?.let {
                             if (data.balances.isNotEmpty()) {
-                                addToList(Wallet(it, data.balances[0].free))
+                                val coins = mutableListOf<Coin>()
+                                var sumBalance = BigDecimal(0)
+                                data.balances.forEach { bnp ->
+                                    sumBalance += bnp.free.toBigDecimal()
+                                    coins.add(
+                                        Coin(
+                                            balance = bnp.free,
+                                            name = bnp.symbol,
+                                            flagUrl = ""
+                                        )
+                                    )
+                                }
+                                addToList(Wallet(it, sumBalance.toString(), coins = coins))
                             }
                         }
                     }
@@ -175,11 +199,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -203,11 +223,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -231,11 +247,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -259,11 +271,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -287,11 +295,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -315,11 +319,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -343,11 +343,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -407,11 +403,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
 
                 }
                 else -> {}
@@ -435,15 +427,21 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(
-                        requireContext().applicationContext,
-                        "Not a valid address",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showOnError()
                 }
                 else -> {}
             }
         }
+    }
+
+    private fun showOnError() {
+        Toast.makeText(
+            requireContext().applicationContext,
+            "Not a valid address",
+            Toast.LENGTH_LONG
+        ).show()
+        binding.btnAddSave.isEnabled = true
+        isCancelable = true
     }
 
     companion object {
