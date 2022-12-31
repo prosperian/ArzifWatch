@@ -20,6 +20,10 @@ sealed class ResponseHandler<T> {
             }
         }
 
+        fun <T> handleError(): Resource<T>{
+            return Resource.Error("Connection Error")
+        }
+
         private fun <T> create(response: Response<T>): ResponseHandler<T> {
             try {
                 return if (response.isSuccessful) {

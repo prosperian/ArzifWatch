@@ -151,7 +151,7 @@ class WalletListAdapter(private val itemClicked: WalletItemClicked) :
         binding.btnPopupYes.setOnClickListener {
             popup.dismiss()
             mList.remove(wallet)
-            notifyItemRemoved(position)
+            notifyDataSetChanged()
             itemClicked.onWalletItemDelete(wallet, mList.size)
         }
 

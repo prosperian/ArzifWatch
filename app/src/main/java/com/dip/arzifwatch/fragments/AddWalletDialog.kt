@@ -180,8 +180,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
     }
 
     private fun getBep2(address: String) {
-        viewModel.getBep2(address)
-        viewModel.bep2.observe(this) {
+        viewModel.getBep2(address).observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -211,7 +210,10 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -220,8 +222,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
     }
 
     private fun getBep20(address: String) {
-        viewModel.getBep20(address)
-        viewModel.bep20.observe(this) {
+        viewModel.getBep20(address).observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -235,7 +236,10 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -244,8 +248,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
     }
 
     private fun getBtc(address: String) {
-        viewModel.getBtc(address)
-        viewModel.btc.observe(this) {
+        viewModel.getBtc(address).observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -259,7 +262,10 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -268,8 +274,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
     }
 
     private fun getBch(address: String) {
-        viewModel.getBch(address)
-        viewModel.bch.observe(this) {
+        viewModel.getBch(address).observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -283,7 +288,10 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -292,8 +300,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
     }
 
     private fun getDoge(address: String) {
-        viewModel.getDoge(address)
-        viewModel.doge.observe(this) {
+        viewModel.getDoge(address).observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -307,7 +314,10 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -316,8 +326,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
     }
 
     private fun getErc20(address: String) {
-        viewModel.getErc20(address)
-        viewModel.erc20.observe(this) {
+        viewModel.getErc20(address).observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -331,7 +340,10 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -340,8 +352,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
     }
 
     private fun getLtc(address: String) {
-        viewModel.getLtc(address)
-        viewModel.ltc.observe(this) {
+        viewModel.getLtc(address).observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -355,7 +366,10 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -364,8 +378,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
     }
 
     private fun getTrc20(address: String) {
-        viewModel.getTrc20(address)
-        viewModel.trc20.observe(this) {
+        viewModel.getTrc20(address).observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -415,7 +428,10 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -424,8 +440,7 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
     }
 
     private fun getXrp(address: String) {
-        viewModel.getXrp(address)
-        viewModel.xrp.observe(this) {
+        viewModel.getXrp(address).observe(this) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -439,17 +454,20 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
                 }
                 else -> {}
             }
         }
     }
 
-    private fun showOnError() {
+    private fun showOnError(message: String = "Not a valid address") {
         Toast.makeText(
             requireContext().applicationContext,
-            "Not a valid address",
+            message,
             Toast.LENGTH_LONG
         ).show()
         binding.btnAddSave.isEnabled = true

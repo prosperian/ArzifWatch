@@ -106,6 +106,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
         }
 
         binding.swipeRefresh.setOnRefreshListener {
+            updateIndex = 0
             binding.swipeRefresh.isRefreshing = false
             if (viewModel.wallets.value?.isEmpty()!!) {
                 Toast.makeText(
@@ -132,7 +133,6 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
             }
         }
         updatedList.add(wallet)
-        Log.d("danial", "updated: " + wallet.address)
         viewModel.updateWallet(wallet)
         adapter.updateWallet(wallet)
     }
@@ -148,7 +148,6 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
             }
             val wallet = it[updateIndex]
             val address = wallet.address
-            Log.d("danial", "getting next: " + address)
             when (wallet.netId) {
                 0 -> {
                     getBep2(address)
@@ -184,8 +183,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
     }
 
     private fun getBep2(address: String) {
-        viewModel.getBep2(address)
-        viewModel.bep2.observe(viewLifecycleOwner) {
+        viewModel.getBep2(address).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
@@ -208,6 +206,7 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                             }
                         }
                     }
+                    getInfo()
                 }
 
                 is Resource.Loading -> {
@@ -215,7 +214,10 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -224,14 +226,15 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
     }
 
     private fun getBep20(address: String) {
-        viewModel.getBep20(address)
-        viewModel.bep20.observe(viewLifecycleOwner) {
+        viewModel.getBep20(address).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
                     it.data?.let { data ->
                         addToUpdateList(Wallet(address, data.result))
                     }
+                    getInfo()
+
                 }
 
                 is Resource.Loading -> {
@@ -239,7 +242,10 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -248,14 +254,14 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
     }
 
     private fun getBtc(address: String) {
-        viewModel.getBtc(address)
-        viewModel.btc.observe(viewLifecycleOwner) {
+        viewModel.getBtc(address).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
                     it.data?.let { data ->
                         addToUpdateList(Wallet(data.address, data.balance))
                     }
+                    getInfo()
                 }
 
                 is Resource.Loading -> {
@@ -263,7 +269,10 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -272,14 +281,14 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
     }
 
     private fun getBch(address: String) {
-        viewModel.getBch(address)
-        viewModel.bch.observe(viewLifecycleOwner) {
+        viewModel.getBch(address).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
                     it.data?.let { data ->
                         addToUpdateList(Wallet(data.address, data.balance))
                     }
+                    getInfo()
                 }
 
                 is Resource.Loading -> {
@@ -287,7 +296,10 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -296,14 +308,14 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
     }
 
     private fun getDoge(address: String) {
-        viewModel.getDoge(address)
-        viewModel.doge.observe(viewLifecycleOwner) {
+        viewModel.getDoge(address).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
                     it.data?.let { data ->
                         addToUpdateList(Wallet(address, data.balance))
                     }
+                    getInfo()
                 }
 
                 is Resource.Loading -> {
@@ -311,7 +323,10 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -320,14 +335,14 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
     }
 
     private fun getErc20(address: String) {
-        viewModel.getErc20(address)
-        viewModel.erc20.observe(viewLifecycleOwner) {
+        viewModel.getErc20(address).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
                     it.data?.let { data ->
                         addToUpdateList(Wallet(address, data.result))
                     }
+                    getInfo()
                 }
 
                 is Resource.Loading -> {
@@ -335,7 +350,10 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -344,14 +362,14 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
     }
 
     private fun getLtc(address: String) {
-        viewModel.getLtc(address)
-        viewModel.ltc.observe(viewLifecycleOwner) {
+        viewModel.getLtc(address).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
                     it.data?.let { data ->
                         addToUpdateList(Wallet(data.address, data.balance))
                     }
+                    getInfo()
                 }
 
                 is Resource.Loading -> {
@@ -359,7 +377,10 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
 
                 }
                 else -> {}
@@ -368,10 +389,10 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
     }
 
     private fun getTrc20(address: String) {
-        viewModel.getTrc20(address)
-        viewModel.trc20.observe(viewLifecycleOwner) {
+        viewModel.getTrc20(address).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
+                    Log.d("danial", "success")
                     it.data?.let { data ->
                         data.balance?.let {
                             val coins = mutableListOf<Coin>()
@@ -410,7 +431,10 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
                 }
                 else -> {}
             }
@@ -418,14 +442,14 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
     }
 
     private fun getXrp(address: String) {
-        viewModel.getXrp(address)
-        viewModel.xrp.observe(viewLifecycleOwner) {
+        viewModel.getXrp(address).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
                     Log.d("danial", "success")
                     it.data?.let { data ->
                         addToUpdateList(Wallet(address, data.balance))
                     }
+                    getInfo()
                 }
 
                 is Resource.Loading -> {
@@ -433,21 +457,23 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 }
 
                 is Resource.Error -> {
-                    showOnError()
+                    if (it.message != null)
+                        showOnError(it.message)
+                    else
+                        showOnError()
                 }
                 else -> {}
             }
         }
     }
 
-    private fun showOnError() {
+    private fun showOnError(message: String = "Not a valid address") {
         Toast.makeText(
             requireContext().applicationContext,
-            "Not a valid address",
+            message,
             Toast.LENGTH_LONG
         ).show()
     }
-
 
     override fun onWalletItemEdit(wallet: Wallet) {
         AddWalletDialog.newInstance(wallet).show(
