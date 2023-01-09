@@ -384,12 +384,8 @@ class AddWalletDialog : DialogFragment(R.layout.dialog_add_wallet) {
                     Log.d("danial", "success")
                     it.data?.let { data ->
 
-                        data.messageOnError?.let {
-                            Toast.makeText(
-                                requireContext().applicationContext,
-                                data.messageOnError,
-                                Toast.LENGTH_LONG
-                            ).show()
+                        data.messageOnError?.let { errMsg ->
+                            showOnError(errMsg)
                         }
 
                         data.balance?.let {

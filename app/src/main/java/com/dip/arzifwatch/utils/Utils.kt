@@ -3,6 +3,9 @@ package com.dip.arzifwatch.utils
 import android.content.Context
 import android.view.WindowManager
 import android.widget.PopupWindow
+import com.dip.arzifwatch.models.Contract
+import com.dip.arzifwatch.models.ContractCoin
+import com.dip.arzifwatch.models.Wallet
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -31,27 +34,51 @@ object Utils {
 
 }
 
-fun BigDecimal.calculateDollarValue(symbol: String): String {
-    var actualValue = BigDecimal(-1)
-    when (symbol) {
-        "BitTorrent" -> {
-            actualValue = this.divide(BigDecimal(1571442702030000000), 2, RoundingMode.FLOOR)
+fun Wallet.contracts(contract: Contract): MutableList<ContractCoin> {
+    val contracts = mutableListOf<ContractCoin>()
+    when (this.net) {
+        "ERC20" -> {
+            contracts.addAll(contract.erc20)
         }
-        "trx" -> {
-            actualValue = this.divide(BigDecimal(18.2643957143), 2, RoundingMode.FLOOR)
+        "BEP20" -> {
+            contracts.addAll(contract.bep20)
         }
-        "APENFT" -> {
-            actualValue = this.divide(BigDecimal(2351130.91663), 2, RoundingMode.FLOOR)
+        "TRC20" -> {
+            contracts.addAll(contract.trc20)
         }
-        "Tether USD" -> {
-            actualValue = this.divide(BigDecimal(1.00007820911), 2, RoundingMode.FLOOR)
+        "BEP2" -> {
+            contracts.addAll(contract.bep2)
         }
     }
-    if (actualValue == BigDecimal(-1)) {
+    return contracts
+}
+
+fun BigDecimal.calculateDollarValue(symbol: String): String {
+    val actualValue = calculate(symbol)
+    if (actualValue == BigDecimal(0)) {
         return "N/A"
     }
     val dec = DecimalFormat("#,###.######")
     return "≈" + dec.format(actualValue.toDouble()) + "$"
+}
+
+fun BigDecimal.calculate(symbol: String): BigDecimal {
+    var actualValue = BigDecimal(0)
+    when (symbol) {
+        "BitTorrent" -> {
+            actualValue = this.divide(BigDecimal(1613760.23551), 2, RoundingMode.CEILING)
+        }
+        "trx" -> {
+            actualValue = this.divide(BigDecimal(18.2568316751), 2, RoundingMode.CEILING)
+        }
+        "APENFT" -> {
+            actualValue = this.divide(BigDecimal(2351130.91663), 2, RoundingMode.CEILING)
+        }
+        "Tether USD" -> {
+            actualValue = this.divide(BigDecimal(1.00032021017), 2, RoundingMode.CEILING)
+        }
+    }
+    return actualValue
 }
 
 fun PopupWindow.dimBehind() {

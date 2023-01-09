@@ -2,10 +2,10 @@ package com.dip.arzifwatch.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,10 +15,13 @@ import com.dip.arzifwatch.api.Resource
 import com.dip.arzifwatch.databinding.FragmentWalletListBinding
 import com.dip.arzifwatch.interfaces.WalletItemClicked
 import com.dip.arzifwatch.models.Coin
+import com.dip.arzifwatch.models.Contract
 import com.dip.arzifwatch.models.Wallet
 import com.dip.arzifwatch.utils.Utils
 import com.dip.arzifwatch.viewmodels.AddViewModel
+import com.google.gson.Gson
 import java.math.BigDecimal
+import java.util.*
 
 class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemClicked {
 
@@ -26,7 +29,6 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
     private lateinit var adapter: WalletListAdapter
     private lateinit var viewModel: AddViewModel
     private var updateIndex = 0
-    private val updatedList = mutableListOf<Wallet>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,9 +45,14 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
             )
         }
 
+        val inputStream = resources.openRawResource(R.raw.contracts)
+        val scanner = Scanner(inputStream).useDelimiter("\\A")
+        val contractJson = if (scanner.hasNext()) scanner.next() else ""
+        val contract = Gson().fromJson(contractJson, Contract::class.java)
+
         binding.rvWalletList.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        adapter = WalletListAdapter(this)
+        adapter = WalletListAdapter(this, contract)
         binding.rvWalletList.adapter = adapter
         binding.rvWalletList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -132,7 +139,6 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 wallet.netId = it.netId
             }
         }
-        updatedList.add(wallet)
         viewModel.updateWallet(wallet)
         adapter.updateWallet(wallet)
     }
@@ -144,6 +150,11 @@ class WalletListFragment : Fragment(R.layout.fragment_wallet_list), WalletItemCl
                 return
             }
             if (updateIndex > it.size - 1) {
+                Toast.makeText(
+                    requireContext().applicationContext,
+                    "Wallets updated",
+                    Toast.LENGTH_LONG
+                ).show()
                 return
             }
             val wallet = it[updateIndex]

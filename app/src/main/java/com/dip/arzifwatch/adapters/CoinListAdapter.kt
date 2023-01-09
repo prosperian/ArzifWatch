@@ -1,5 +1,6 @@
 package com.dip.arzifwatch.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +8,8 @@ import com.bumptech.glide.Glide
 import com.dip.arzifwatch.R
 import com.dip.arzifwatch.databinding.CoinListItemBinding
 import com.dip.arzifwatch.models.Coin
+import com.dip.arzifwatch.models.Contract
+import com.dip.arzifwatch.models.ContractCoin
 import com.dip.arzifwatch.utils.calculateDollarValue
 import java.math.BigDecimal
 import java.math.MathContext
@@ -14,8 +17,12 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
+import kotlin.math.pow
 
-class CoinListAdapter(private val mList: MutableList<Coin>) :
+class CoinListAdapter(
+    private val mList: MutableList<Coin>,
+    private val contracts: MutableList<ContractCoin>
+) :
     RecyclerView.Adapter<CoinListAdapter.CoinListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinListViewHolder {
@@ -29,10 +36,10 @@ class CoinListAdapter(private val mList: MutableList<Coin>) :
         with(holder) {
             binding.tvCoinName.text = coin.name
             try {
-                val trueBalance = coin.balance.toBigDecimal().divide(BigDecimal(1000000))
                 val dec = DecimalFormat("#,###.######")
-                binding.tvCoinBalance.text = dec.format(trueBalance)
-                binding.tvCoinDollar.text = trueBalance.calculateDollarValue(coin.name)
+                binding.tvCoinBalance.text = dec.format(coin.balance.toBigDecimal())
+                binding.tvCoinDollar.text =
+                    coin.balance.toBigDecimal().calculateDollarValue(coin.name)
             } catch (e: NumberFormatException) {
             }
 

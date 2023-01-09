@@ -15,13 +15,21 @@ import com.dip.arzifwatch.databinding.PopupLayoutBinding
 import com.dip.arzifwatch.databinding.SurePopupBinding
 import com.dip.arzifwatch.databinding.WalletListItemBinding
 import com.dip.arzifwatch.interfaces.WalletItemClicked
+import com.dip.arzifwatch.models.Contract
+import com.dip.arzifwatch.models.ContractCoin
 import com.dip.arzifwatch.models.Wallet
+import com.dip.arzifwatch.utils.calculate
+import com.dip.arzifwatch.utils.contracts
 import com.dip.arzifwatch.utils.dimBehind
 import java.math.BigDecimal
 import java.text.DecimalFormat
+import kotlin.math.pow
 
 
-class WalletListAdapter(private val itemClicked: WalletItemClicked) :
+class WalletListAdapter(
+    private val itemClicked: WalletItemClicked,
+    private val contract: Contract
+) :
     RecyclerView.Adapter<WalletListAdapter.WalletViewHolder>() {
 
     private lateinit var context: Context
@@ -51,14 +59,7 @@ class WalletListAdapter(private val itemClicked: WalletItemClicked) :
 
             binding.tvListAddress.text = wallet.address
             try {
-                var trueBalance = wallet.balance.toBigDecimal().divide(BigDecimal(1000000))
-                if (wallet.net == "ERC20") {
-                    trueBalance = wallet.balance.toBigDecimal().divide(BigDecimal(1000000000))
-                    trueBalance = trueBalance.divide(BigDecimal(1000000000))
-                }
-                val dec = DecimalFormat("#,###.######")
-                binding.tvListBalance.text =
-                    context.resources.getString(R.string.dollar_format, dec.format(trueBalance))
+                binding.tvListBalance.text = calculateValue(wallet)
             } catch (e: NumberFormatException) {
             }
 
@@ -72,10 +73,47 @@ class WalletListAdapter(private val itemClicked: WalletItemClicked) :
                 }
                 binding.rvListCoins.layoutManager = layoutManager
                 binding.rvListCoins.setRecycledViewPool(rvPool)
-                binding.rvListCoins.adapter = CoinListAdapter(wallet.coins)
+                val contracts = wallet.contracts(contract)
+                binding.rvListCoins.adapter = CoinListAdapter(wallet.coins, contracts)
             }
         }
 
+    }
+
+    private fun calculateValue(wallet: Wallet): String {
+        var trueBalance = wallet.balance.toBigDecimal().divide(BigDecimal(1000000))
+        if (wallet.net == "ERC20") {
+            trueBalance = wallet.balance.toBigDecimal().divide(BigDecimal(10.0.pow(18)))
+        }
+
+        var dollarValue = BigDecimal(0)
+        val contracts = wallet.contracts(contract)
+        wallet.coins.forEach { coin ->
+            var decimal = 6
+            contracts.forEach {
+                if (coin.name == it.name) {
+                    decimal = it.decimal
+                }
+                if (coin.name == "BitTorrent") {
+                    if (it.name == "BTT") {
+                        decimal = it.decimal
+                    }
+                }
+            }
+
+            val coinBalance =
+                coin.balance.toBigDecimal()
+                    .divide(BigDecimal(10.0.pow(decimal.toDouble())))
+            coin.balance = coinBalance.toString()
+
+            dollarValue += coinBalance.calculate(coin.name)
+        }
+        val dec = DecimalFormat("#,###.######")
+        return if (dollarValue == BigDecimal(0)) {
+            context.resources.getString(R.string.dollar_format, dec.format(trueBalance))
+        } else {
+            context.resources.getString(R.string.dollar_format, dec.format(dollarValue))
+        }
     }
 
     fun addWallet(wallet: Wallet) {

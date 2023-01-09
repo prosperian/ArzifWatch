@@ -1,0 +1,240 @@
+{
+  "ERC20": [
+    {
+      "name": "KISHU",
+      "address": "0xa2b4c0af19cc16a6cfacce81f192b024d625817d",
+      "decimal": 9
+    },
+    {
+      "name": "SHIB",
+      "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+      "decimal": 18
+    },
+    {
+      "name": "SHIBDOGE",
+      "address": "0x6ADb2E268de2aA1aBF6578E4a8119b960E02928F",
+      "decimal": 9
+    },
+    {
+      "name": "USDT",
+      "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "decimal": 6
+    },
+    {
+      "name": "SHINJA",
+      "address": "0x7DAc25b1A665e1c70F25F1fC37d88C99274984ed",
+      "decimal": 9
+    },
+    {
+      "name": "STARL",
+      "address": "0x8E6cd950Ad6ba651F6DD608Dc70e5886B1AA6B24",
+      "decimal": 18
+    },
+    {
+      "name": "CHZ",
+      "address": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
+      "decimal": 18
+    }
+  ],
+  "BEP20": [
+    {
+      "name": "SFM",
+      "address": "0x42981d0bfbAf196529376EE702F2a9Eb9092fcB5",
+      "decimal": 9
+    },
+    {
+      "name": "FWC",
+      "address": "0x6D3a160B86eDcD46D8F9bBa25c2F88ccCADe19fc",
+      "decimal": 9
+    },
+    {
+      "name": "SHIB",
+      "address": "0x2859e4544c4bb03966803b044a93563bd2d0dd4d",
+      "decimal": 18
+    },
+    {
+      "name": "FEG",
+      "address": "0xacfc95585d80ab62f67a14c566c1b7a49fe91167",
+      "decimal": 9
+    },
+    {
+      "name": "ZIL",
+      "address": "0xb86abcb37c3a4b64f74f59301aff131a1becc787",
+      "decimal": 12
+    },
+    {
+      "name": "DOT",
+      "address": "0x7083609fce4d1d8dc0c979aab8c869ea2c873402",
+      "decimal": 18
+    },
+    {
+      "name": "XLM",
+      "address": "0x43c934a845205f0b514417d757d7235b8f53f1b9",
+      "decimal": 18
+    },
+    {
+      "name": "BabyDoge",
+      "address": "0xc748673057861a797275CD8A068AbB95A902e8de",
+      "decimal": 9
+    },
+    {
+      "name": "DADDYDOGE",
+      "address": "0x7ccE94C0B2C8aE7661f02544E62178377Fe8cF92",
+      "decimal": 9
+    },
+    {
+      "name": "BABYCAKEOLD",
+      "address": "0xdb8d30b74bf098af214e862c90e647bbb1fcc58c",
+      "decimal": 18
+    },
+    {
+      "name": "BABYCAKE",
+      "address": "0xdB8D30b74bf098aF214e862C90E647bbB1fcC58c",
+      "decimal": 18
+    },
+    {
+      "name": "BMON",
+      "address": "0x08ba0619b1e7a582e0bce5bbe9843322c954c340",
+      "decimal": 18
+    },
+    {
+      "name": "MINIFOOTBALL",
+      "address": "0xd024ac1195762f6f13f8cfdf3cdd2c97b33b248b",
+      "decimal": 9
+    },
+    {
+      "name": "FLOKI",
+      "address": "0x4aadad81487c3fadd9f162b851e6a61b729200cb",
+      "decimal": 18
+    },
+    {
+      "name": "FLOKIINU",
+      "address": "0xfb5b838b6cfeedc2873ab27866079ac55363d37e",
+      "decimal": 9
+    },
+    {
+      "name": "MIOTA",
+      "address": "0xd944f1d1e9d5f9bb90b62f9d45e447d989580782",
+      "decimal": 6
+    },
+    {
+      "name": "ARV",
+      "address": "0x6679eb24f59dfe111864aec72b443d1da666b360",
+      "decimal": 8
+    },
+    {
+      "name": "BABYSHIBAINU",
+      "address": "0xaecf6d1aff214fef70042740054f0f6d0caa98ab",
+      "decimal": 9
+    },
+    {
+      "name": "RAINBOW",
+      "address": "0x673da443da2f6ae7c5c660a9f0d3dd24d1643d36",
+      "decimal": 9
+    },
+    {
+      "name": "RYOSHI",
+      "address": "0x0e5f989ce525acc4ee45506af91964f7f4c9f2e9",
+      "decimal": 9
+    },
+    {
+      "name": "HAM",
+      "address": "0x679d5b2d94f454c950d683d159b87aa8eae37c9e",
+      "decimal": 7
+    },
+    {
+      "name": "METAPETS",
+      "address": "0x24ce3d571fbcfd9d81dc0e1a560504636a4d046d",
+      "decimal": 9
+    },
+    {
+      "name": "GAMINGSHIBA",
+      "address": "0x41cf3e9534156405a133cda545af9ff0e586500a",
+      "decimal": 9
+    },
+    {
+      "name": "SPOOKYSHIBA",
+      "address": "0x9c2B1B3780A8B36B695f0b2781668664aC1Bf25A",
+      "decimal": 18
+    },
+    {
+      "name": "BRISE",
+      "address": "0x8fff93e810a2edaafc326edee51071da9d398e83",
+      "decimal": 9
+    },
+    {
+      "name": "CATGIRL",
+      "address": "0x79eBC9A2ce02277A4b5b3A768b1C0A4ed75Bd936",
+      "decimal": 9
+    },
+    {
+      "name": "SPACEPI",
+      "address": "0x69b14e8D3CEBfDD8196Bfe530954A0C226E5008E",
+      "decimal": 9
+    },
+    {
+      "name": "VINU",
+      "address": "0xfEbe8C1eD424DbF688551D4E2267e7A53698F0aa",
+      "decimal": 18
+    },
+    {
+      "name": "QUACK",
+      "address": "0xD74b782E05AA25c50e7330Af541d46E18f36661C",
+      "decimal": 9
+    }
+  ],
+  "TRC20": [
+    {
+      "name": "BTT",
+      "address": "TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4",
+      "decimal": 18
+    },
+    {
+      "name": "USDT",
+      "address": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+      "decimal": 6
+    }
+  ],
+  "BEP2": [
+    {
+      "name": "ADA",
+      "assetName": "ADA-9F4",
+      "decimal": 18
+    },
+    {
+      "name": "ATOM",
+      "assetName": "ATOM-596",
+      "decimal": 18
+    },
+    {
+      "name": "BNB",
+      "assetName": "BNB",
+      "decimal": 18
+    },
+    {
+      "name": "BUSD",
+      "assetName": "BUSD-BD1",
+      "decimal": 18
+    },
+    {
+      "name": "CAKE",
+      "assetName": "CAKE-435",
+      "decimal": 18
+    },
+    {
+      "name": "MATIC",
+      "assetName": "MATIC-84A",
+      "decimal": 18
+    },
+    {
+      "name": "TWT",
+      "assetName": "TWT-8C2",
+      "decimal": 18
+    },
+    {
+      "name": "WIN",
+      "assetName": "WINB-41F",
+      "decimal": 18
+    }
+  ]
+}
